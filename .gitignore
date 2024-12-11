@@ -1,0 +1,43 @@
+# Go build artifacts
+/bin/
+/pkg/
+/gen/
+
+# Binaries for programs and plugins
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Test binary, build output
+*.out
+
+# Dependency directories (remove the comment below if you use Go modules)
+vendor/
+
+# Logs
+*.log
+
+# Docker
+docker-compose.override.yml
+docker-compose.override.yaml
+
+# Kubernetes
+*.kubeconfig
+*.kube/
+
+# Protobuf generated files
+*.pb.go
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*~
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Ignore Go module files if not needed
+go.sum

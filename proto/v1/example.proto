@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package proto.v1;
+
+option go_package = "kubeprac/gen/proto/v1";
+
+// YourService는 예제 서비스를 정의합니다.
+service YourService {
+  // ExampleMethod는 예제 요청을 처리하고 응답을 반환합니다.
+  rpc ExampleGetMethod(ExampleGetMethodRequest) returns (ExampleGetMethodResponse) {}
+  rpc ExamplePostMethod(ExamplePostMethodRequest) returns (ExamplePostMethodResponse) {}
+}
+
+// ExampleRequest는 클라이언트로부터의 요청을 정의합니다.
+message ExampleGetMethodRequest {
+  // id는 데이터베이스에서 조회할 레코드의 ID입니다.
+  int64 id = 1;
+}
+
+// ExampleResponse는 서버의 응답을 정의합니다.
+message ExampleGetMethodResponse {
+  // message는 Redis와 PostgreSQL에서 조회한 데이터를 포함한 응답 메시지입니다.
+  string message = 1;
+}
+
+message ExamplePostMethodRequest {
+  string some_field = 1;
+}
+
+message ExamplePostMethodResponse {
+  string message = 1;
+}

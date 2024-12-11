@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grpc-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grpc-server
+  template:
+    metadata:
+      labels:
+        app: grpc-server
+    spec:
+      containers:
+      - name: grpc-server
+        image: grpc-server:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 50051
+        env:
+        - name: REDIS_HOST
+          value: redis
+        - name: POSTGRES_HOST
+          value: postgres
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: rudfls741
+        - name: POSTGRES_DB
+          value: kubeprac
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grpc-server
+spec:
+  type: NodePort
+  selector:
+    app: grpc-server
+  ports:
+  - port: 50051
+    targetPort: 50051
+    nodePort: 30051 

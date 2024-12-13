@@ -14,7 +14,7 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 
-	pb "kubeprac/gen/proto/v1"
+	pb "kubeprac/proto/gen/grpc/v1"
 )
 
 // server is used to implement the gRPC service.

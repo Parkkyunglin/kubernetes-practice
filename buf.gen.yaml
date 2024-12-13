@@ -1,8 +1,10 @@
 version: v1
 plugins:
   - plugin: go
-    out: gen
-    opt: paths=source_relative
+    out: .
+    opt: 
+      - module=kubeprac
   - plugin: go-grpc
-    out: gen
-    opt: paths=source_relative
+    out: .
+    opt:
+      - module=kubeprac

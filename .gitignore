@@ -28,6 +28,7 @@ docker-compose.override.yaml
 
 # Protobuf generated files
 *.pb.go
+proto/gen/
 
 # IDE and editor files
 .idea/

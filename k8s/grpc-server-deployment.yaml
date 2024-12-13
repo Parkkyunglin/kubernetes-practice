@@ -23,15 +23,30 @@ spec:
           mountPath: /app/logs
         env:
         - name: REDIS_HOST
-          value: redis
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: REDIS_HOST
         - name: POSTGRES_HOST
-          value: postgres
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: POSTGRES_HOST
         - name: POSTGRES_USER
-          value: postgres
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: POSTGRES_USER
         - name: POSTGRES_PASSWORD
-          value: rudfls741
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: POSTGRES_PASSWORD
         - name: POSTGRES_DB
-          value: kubeprac
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: POSTGRES_DB
       - name: filebeat
         image: docker.elastic.co/beats/filebeat:8.5.0
         volumeMounts:

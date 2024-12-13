@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package grpc.v1;
+package notification.v1;
 
-option go_package = "kubeprac/proto/gen/grpc/v1";
+option go_package = "kubeprac/gen/notification/v1";
 
 // YourService는 예제 서비스를 정의합니다.
 service YourService {

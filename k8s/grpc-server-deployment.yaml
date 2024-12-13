@@ -18,6 +18,9 @@ spec:
         imagePullPolicy: Never
         ports:
         - containerPort: 50051
+        volumeMounts:
+        - name: log-volume
+          mountPath: /app/logs
         env:
         - name: REDIS_HOST
           value: redis
@@ -29,6 +32,20 @@ spec:
           value: rudfls741
         - name: POSTGRES_DB
           value: kubeprac
+      - name: filebeat
+        image: docker.elastic.co/beats/filebeat:8.5.0
+        volumeMounts:
+        - name: filebeat-config
+          mountPath: /usr/share/filebeat/filebeat.yml
+          subPath: filebeat.yml
+        - name: log-volume
+          mountPath: /app/logs
+      volumes:
+      - name: log-volume
+        emptyDir: {}
+      - name: filebeat-config
+        configMap:
+          name: filebeat-config
 ---
 apiVersion: v1
 kind: Service

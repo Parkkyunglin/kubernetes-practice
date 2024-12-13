@@ -87,6 +87,22 @@ func (s *server) ExamplePostMethod(ctx context.Context, req *pb.ExamplePostMetho
 }
 
 func main() {
+
+	if err := os.MkdirAll("logs", 0755); err != nil {
+		log.Fatalf("Failed to create log directory: %v", err)
+	}
+
+	// JSON 형식으로 로그 설정
+	logrus.SetFormatter(&logrus.JSONFormatter{})
+	file, err := os.OpenFile("logs/grpc-server.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	if err != nil {
+		log.Fatalf("Failed to open log file: %v", err)
+	}
+	logrus.SetOutput(file)
+
+	// 로그 레벨 설정
+	logrus.SetLevel(logrus.InfoLevel)
+
 	// Initialize Redis client
 	redisHost := os.Getenv("REDIS_HOST")
 	if redisHost == "" {
@@ -128,12 +144,6 @@ func main() {
 	}
 	grpcServer := grpc.NewServer()
 	pb.RegisterYourServiceServer(grpcServer, &server{redisClient: redisClient, db: db})
-
-	// JSON 형식으로 로그 설정
-	logrus.SetFormatter(&logrus.JSONFormatter{})
-
-	// 로그 레벨 설정
-	logrus.SetLevel(logrus.InfoLevel)
 
 	log.Println("Server is running on port 50051")
 	if err := grpcServer.Serve(lis); err != nil {

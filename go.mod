@@ -4,6 +4,7 @@ go 1.23.4
 
 require (
 	github.com/go-redis/redis/v8 v8.11.5
+	github.com/joho/godotenv v1.5.1
 	github.com/sirupsen/logrus v1.9.3
 	google.golang.org/grpc v1.68.1
 	google.golang.org/protobuf v1.34.2

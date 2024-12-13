@@ -44,3 +44,6 @@ go.sum
 
 .env
 .env.kubernates
+
+tmp/
+air_errors.log

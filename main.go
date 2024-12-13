@@ -8,6 +8,7 @@ import (
 	"os"
 
 	"github.com/go-redis/redis/v8"
+	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"gorm.io/driver/postgres"
@@ -87,6 +88,10 @@ func (s *server) ExamplePostMethod(ctx context.Context, req *pb.ExamplePostMetho
 }
 
 func main() {
+
+	if err := godotenv.Load(); err != nil {
+		log.Printf("Warning: .env file not found, using environment variables")
+	}
 
 	if err := os.MkdirAll("logs", 0755); err != nil {
 		log.Fatalf("Failed to create log directory: %v", err)

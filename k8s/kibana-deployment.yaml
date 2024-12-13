@@ -18,6 +18,10 @@ spec:
         env:
         - name: ELASTICSEARCH_HOSTS
           value: http://elasticsearch:9200
+        - name: ELASTICSEARCH_SSL_VERIFICATIONMODE
+          value: "none"
+        - name: XPACK_SECURITY_ENABLED
+          value: "false"
         ports:
         - containerPort: 5601
 ---

@@ -31,13 +31,11 @@ func (s *server) ExampleGetMethod(ctx context.Context, req *pb.ExampleGetMethodR
 	val, err := s.redisClient.Get(ctx, "example_key").Result()
 	if err != nil {
 		if err == redis.Nil {
-			// log.Println("Key does not exist in Redis")
 			logrus.WithFields(logrus.Fields{
 				"event": "get_redis_key_error",
 				"key":   "example_key",
 			}).Info("Redis error")
 		} else {
-			// log.Printf("Redis error: %v", err)
 			logrus.WithFields(logrus.Fields{
 				"event": "redis_error",
 				"key":   "example_key",
@@ -49,13 +47,18 @@ func (s *server) ExampleGetMethod(ctx context.Context, req *pb.ExampleGetMethodR
 	// Example: Query from PostgreSQL
 	var result YourModel
 	if err := s.db.First(&result, "id = ?", idValue).Error; err != nil {
-		// log.Printf("PostgreSQL error: %v", err)
 		logrus.WithFields(logrus.Fields{
 			"event": "postgresql_error",
 			"id":    idValue,
 		}).Info("PostgreSQL error")
 		return nil, err
 	}
+
+	logrus.WithFields(logrus.Fields{
+		"event":      "success",
+		"id":         idValue,
+		"some_field": result.SomeField,
+	}).Info("Get record success")
 
 	return &pb.ExampleGetMethodResponse{Message: fmt.Sprintf("Value: %s, DB: %s", val, result.SomeField)}, nil
 }
@@ -68,13 +71,17 @@ func (s *server) ExamplePostMethod(ctx context.Context, req *pb.ExamplePostMetho
 	}
 
 	if err := s.db.Create(&newRecord).Error; err != nil {
-		// log.Printf("PostgreSQL error: %v", err)
 		logrus.WithFields(logrus.Fields{
 			"event":      "postgresql_create_error",
 			"some_field": someFieldValue,
 		}).Info("PostgreSQL create error")
 		return nil, err
 	}
+
+	logrus.WithFields(logrus.Fields{
+		"event":      "success",
+		"some_field": someFieldValue,
+	}).Info("Create record success")
 
 	return &pb.ExamplePostMethodResponse{Message: "Record saved successfully"}, nil
 }
